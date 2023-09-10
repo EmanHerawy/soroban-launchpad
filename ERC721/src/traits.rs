@@ -7,9 +7,9 @@ pub trait TokenTrait {
 
     /********************** token setter ****************** */
 
-    fn approve(e: Env, from: Address, spender: Address, token_id: i128, expiration_ledger: u32);
+    fn approve(e: Env, from: Address, spender: Address, token_id: i128);
 
-    fn approval_for_all(e: Env, from: Address, spender: Address,status:bool , expiration_ledger: u32);
+    fn approval_for_all(e: Env, from: Address, spender: Address,status:bool );
 
     fn transfer(e: Env, from: Address, to: Address, token_id: i128);
 

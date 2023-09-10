@@ -28,8 +28,7 @@ pub fn write_allowance(
     e: &Env,
     spender: Address,
     token_id: i128,
-    expiration_ledger: u32,
-) {
+ ) {
     
     let key = DataKey::Allowance(AllowanceDataKey { token_id });
     e.storage().temporary().set(&key.clone(), &spender);
@@ -39,8 +38,7 @@ pub fn write_allowance_for_all(
     from: Address,
     spender: Address,
     status: bool,
-    expiration_ledger: u32,
-) {
+ ) {
     let key = DataKey::ApproveForAll(ApproveDataKey { from, spender });
     e.storage().temporary().set(&key.clone(), &status);
 }

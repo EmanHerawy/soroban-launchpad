@@ -56,7 +56,7 @@ impl TokenTrait for Token {
         read_allowance_all(&e, from, spender)
     }
 
-    fn approve(e: Env, from: Address, spender: Address, token_id: i128, expiration_ledger: u32) {
+    fn approve(e: Env, from: Address, spender: Address, token_id: i128) {
         from.require_auth();
 
         check_nonnegative_token_id(token_id);
@@ -65,17 +65,17 @@ impl TokenTrait for Token {
           if  owner_of(&e, token_id) != from{
             panic!("not owner")
         }
-        write_allowance(&e, spender.clone(), token_id, expiration_ledger);
-        event::approve(&e, from, spender, token_id, expiration_ledger);
+        write_allowance(&e, spender.clone(), token_id);
+        event::approve(&e, from, spender, token_id);
     }
-    fn approval_for_all(e: Env, from: Address, spender: Address, status:bool, expiration_ledger: u32) {
+    fn approval_for_all(e: Env, from: Address, spender: Address, status:bool) {
         from.require_auth();
 
  
         e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
 
-        write_allowance_for_all(&e, from.clone(), spender.clone(), status, expiration_ledger);
-        event::approve_all(&e, from, spender,status,  expiration_ledger);
+        write_allowance_for_all(&e, from.clone(), spender.clone(), status);
+        event::approve_all(&e, from, spender,status);
     }
 
     fn balance_of(e: Env, id: Address) -> Vec<i128> {

@@ -41,7 +41,7 @@ pub fn spend_balance(e: &Env, addr: Address, token_id: i128) {
     if !is_authorized(e, addr.clone()) {
         panic!("can't spend when deauthorized");
     }
-        balance.iter()
+       let _= balance.iter()
             .position(|n| n == token_id)
             .map(|e| balance.remove(e.try_into().unwrap()))
             .is_some();
