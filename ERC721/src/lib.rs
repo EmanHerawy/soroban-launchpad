@@ -9,6 +9,6 @@ mod event;
 mod metadata;
 mod traits;
 mod storage_types;
-// mod test;
+mod test;
 
 pub use crate::contract::TokenClient;

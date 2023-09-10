@@ -7,7 +7,7 @@ use crate::balance::{read_balance, receive_balance, spend_balance, owner_of};
 use crate::event;
 use crate::metadata::{ read_name,read_base_uri, read_symbol, write_metadata};
 use crate::storage_types::INSTANCE_BUMP_AMOUNT;
-use soroban_sdk::{contract, contractimpl, Address, Env,Vec, String};
+use soroban_sdk::{contract, contractimpl, Address, Env,Vec, String,IntoVal};
 use crate::token_utils::TokenMetadata;
 use crate::traits::TokenTrait;
 
@@ -48,8 +48,9 @@ impl TokenTrait for Token {
         owner_of(&e, token_id)
     }
     fn token_uri(e: Env, token_id: i128) -> String{
-        unimplemented!()
-    }
+// &<i128 as IntoVal<Env, T>>::into_val(&token_id, &e).to_string() 
+unimplemented!()
+        }
 
     fn is_approved_for_all(e: Env, from: Address, spender: Address) -> bool {
         e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
@@ -89,29 +90,31 @@ impl TokenTrait for Token {
         is_authorized(&e, id)
     }
 
-    fn transfer(e: Env, from: Address, to: Address, amount: i128) {
+    fn transfer(e: Env, from: Address, to: Address, token_id: i128) {
         from.require_auth();
 
-        check_nonnegative_token_id(amount);
-
+        check_nonnegative_token_id(token_id);
+  if  owner_of(&e, token_id) != from{
+            panic!("not owner")
+        }
         e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
 
-        spend_balance(&e, from.clone(), amount);
-        receive_balance(&e, to.clone(), amount);
-        event::transfer(&e, from, to, amount);
+        spend_balance(&e, from.clone(), token_id);
+        receive_balance(&e, to.clone(), token_id);
+        event::transfer(&e, from, to, token_id);
     }
 
-    fn transfer_from(e: Env, spender: Address, from: Address, to: Address, amount: i128) {
+    fn transfer_from(e: Env, spender: Address, from: Address, to: Address, token_id: i128) {
         spender.require_auth();
 
-        check_nonnegative_token_id(amount);
+        check_nonnegative_token_id(token_id);
 
         e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
 
-        spend_allowance(&e,  spender, amount);
-        spend_balance(&e, from.clone(), amount);
-        receive_balance(&e, to.clone(), amount);
-        event::transfer(&e, from, to, amount)
+        spend_allowance(&e,  spender, token_id);
+        spend_balance(&e, from.clone(), token_id);
+        receive_balance(&e, to.clone(), token_id);
+        event::transfer(&e, from, to, token_id)
     }
 
 
@@ -126,15 +129,15 @@ impl TokenTrait for Token {
         event::set_authorized(&e, admin, id, authorize);
     }
 
-    fn mint(e: Env, to: Address, amount: i128) {
-        check_nonnegative_token_id(amount);
+    fn mint(e: Env, to: Address, token_id: i128) {
+        check_nonnegative_token_id(token_id);
         let admin = read_administrator(&e);
         admin.require_auth();
 
         e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
 
-        receive_balance(&e, to.clone(), amount);
-        event::mint(&e, admin, to, amount);
+        receive_balance(&e, to.clone(), token_id);
+        event::mint(&e, admin, to, token_id);
     }
 
     fn set_admin(e: Env, new_admin: Address) {
