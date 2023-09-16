@@ -13,8 +13,8 @@ pub trait TokenTrait {
 
     fn transfer(e: Env, from: Address, to: Address, token_id: i128);
 
-    fn transfer_from(e: Env, spender: Address, from: Address, to: Address, amount: i128);
-    fn mint(e: Env, to: Address, amount: i128);
+    fn transfer_from(e: Env, spender: Address, from: Address, to: Address, token_id: i128);
+    fn mint(e: Env, to: Address, token_id: i128);
 
     /********************** token auth ****************** */
 

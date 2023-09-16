@@ -7,7 +7,7 @@ use crate::balance::{read_balance, receive_balance, spend_balance, owner_of};
 use crate::event;
 use crate::metadata::{ read_name,read_base_uri, read_symbol, write_metadata};
 use crate::storage_types::INSTANCE_BUMP_AMOUNT;
-use soroban_sdk::{contract, contractimpl, Address, Env,Vec, String,IntoVal};
+use soroban_sdk::{contract, contractimpl, Address, Env,Vec, String,IntoVal, FromVal};
 use crate::token_utils::TokenMetadata;
 use crate::traits::TokenTrait;
 
@@ -49,7 +49,7 @@ impl TokenTrait for Token {
     }
     fn token_uri(e: Env, token_id: i128) -> String{
 // &<i128 as IntoVal<Env, T>>::into_val(&token_id, &e).to_string() 
-unimplemented!()
+        read_base_uri(&e)// + &<i128 as IntoVal<Env, T>>::into_val(&token_id, &e).to_string()
         }
 
     fn is_approved_for_all(e: Env, from: Address, spender: Address) -> bool {

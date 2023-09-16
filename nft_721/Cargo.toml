@@ -1,5 +1,5 @@
 [package]
-name = "soroban-nft-token-contract"
+name = "nft_721"
 description = "Soroban standard nft token contract"
 version = "0.0.6"
 edition = "2021"
