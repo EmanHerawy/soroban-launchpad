@@ -1,5 +1,5 @@
 # Soropad 
-### **"Soropad: Your Gateway to NFT Stardom on Soroban Stellar."**
+### **"Sorapad: Your easy way to a world of tokenization on Stellar network."**
 
 ![Alt text](image.png)
 ## Inspiration
