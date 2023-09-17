@@ -51,7 +51,7 @@ Navigate to the contract directory and run the following command :
 
 or
 
-- ```soroban build```
+- ```soroban contract build```
 
 
 ## How to test :
