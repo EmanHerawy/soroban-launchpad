@@ -7,7 +7,7 @@ use crate::balance::{read_balance, receive_balance, spend_balance, owner_of};
 use crate::event;
 use crate::metadata::{ read_name,read_base_uri, read_symbol, write_metadata};
 use crate::storage_types::INSTANCE_BUMP_AMOUNT;
-use soroban_sdk::{contract, contractimpl, Address, Env,Vec, String,IntoVal, FromVal};
+use soroban_sdk::{contract, contractimpl, Address, Env,Vec, String, FromVal};
 use crate::token_utils::TokenMetadata;
 use crate::traits::TokenTrait;
 
