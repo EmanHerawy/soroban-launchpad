@@ -1,6 +1,7 @@
 
 use soroban_sdk::{Address, Env, String,Vec};
- 
+ use crate::storage_types::{ TokenURIValue};
+
 pub trait TokenTrait {
     /********************** constructor ****************** */
     fn initialize(e: Env,  admin: Address, base_uri: String, name: String, symbol: String);
@@ -29,7 +30,7 @@ pub trait TokenTrait {
     fn balance_of(e: Env, category: i128, id: Address) -> Vec<i128>;
 
     fn name(e: Env) -> String;
-    fn token_uri(e: Env, token_id: i128) -> String;
+    fn token_uri(e: Env, token_id: i128) -> TokenURIValue;
     fn base_uri(e: Env) -> String;
     fn symbol(e: Env) -> String;
 }

@@ -1,4 +1,4 @@
-use soroban_sdk::{contracttype, Address};
+use soroban_sdk::{contracttype, Address,String};
 
 pub(crate) const INSTANCE_BUMP_AMOUNT: u32 = 34560; // 2 days
 pub(crate) const BALANCE_BUMP_AMOUNT: u32 = 518400; // 30 days
@@ -23,7 +23,11 @@ pub struct TokenDataKey {
      pub category: i128
  }
 
-
+ #[contracttype]
+pub struct TokenURIValue {
+    pub token_id: i128,
+    pub base_uri: String,
+}
 #[derive(Clone)]
 #[contracttype]
 pub enum DataKey {
