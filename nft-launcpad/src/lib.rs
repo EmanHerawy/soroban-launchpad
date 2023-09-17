@@ -1,6 +1,6 @@
 #![no_std]
  
- use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, Env, String,Val, Vec,BytesN,IntoVal};
+ use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, Env, String, Vec,BytesN};
 mod nft_721 {
     soroban_sdk::contractimport!(
         file = "../nft_721/target/wasm32-unknown-unknown/release/nft_721.wasm"
@@ -57,7 +57,7 @@ impl NFTTokenlanchpad {
            &admin, &base_uri, &name, &symbol  );
         // Return the contract ID of the deployed contract 
         // get the array from storage Vec::<Address> 
-        let mut contracts  = & mut env.storage().instance().get::<_,Vec::<Address> >(&DataKey::DeployedContracts).unwrap_or(Vec::new(&env));      // save address to adress mappings
+        let  contracts  = & mut env.storage().instance().get::<_,Vec::<Address> >(&DataKey::DeployedContracts).unwrap_or(Vec::new(&env));      // save address to adress mappings
          contracts.push_back(deployed_contract.clone());
         //  // save to ledger
         env.storage()
