@@ -4,7 +4,8 @@
 ![Alt text](image.png)
 ## Inspiration
 The inspiration behind Soropad stemmed from the desire to empower artists, content creators, and innovators in the blockchain space. We wanted to provide a user-friendly platform that enables the seamless launch of various types of tokens, including fungible tokens, non-fungible tokens (NFTs), and semi-fungible tokens. If we can make it easier for creators to bring their ideas to life on the blockchain, we can accelerate the adoption of blockchain technology and its transformative potential. Through INO " Initial NFT Offering", we can help artists monetize their work by selecting the best payment token which couldb be XLM, USDC, or any other token on the Soroban Stellar network they create,  and connect with their fans. We believe that Soropad can be a gateway to NFT stardom on Soroban Stellar.
-
+## What it does
+Soropad is a platform that enables the seamless launch of various types of tokens, including fungible tokens, non-fungible tokens (NFTs), and semi-fungible tokens. It also enables the launch of INO " Initial NFT Offering" which allows artists to monetize their work by selecting the best payment token which could be XLM, USDC, or any other token on the Soroban Stellar network they create, and connect with their fans.
 ## Main Complements :
 1. ### **Smart contracts**
 - **tokenlanchpad** : this contract provides an easy way to create and launch fungible tokens, similar to ERC20 tokens in the Ethereum ecosystem. User can create a token by selecting a name, symbol, and decimal. The token is launched on the Soroban Stellar network with a single click. 
