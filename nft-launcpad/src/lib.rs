@@ -3,7 +3,7 @@
  use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, Env, String,Val, Vec,BytesN,IntoVal};
 mod nft_721 {
     soroban_sdk::contractimport!(
-        file = "../ERC721/target/wasm32-unknown-unknown/release/nft_721.wasm"
+        file = "../nft_721/target/wasm32-unknown-unknown/release/nft_721.wasm"
     );
 }
 
