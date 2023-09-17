@@ -6,7 +6,7 @@ pub(crate) fn approve(e: &Env, from: Address, to: Address, token_id: i128) {
 }
 pub(crate) fn approve_all(e: &Env, from: Address, to: Address, status:bool,) {
     let topics = (Symbol::new(e, "approveAll"), from, to);
-    e.events().publish(topics, (status));
+    e.events().publish(topics, status);
 }
 
 pub(crate) fn transfer(e: &Env, from: Address, to: Address, token_id: i128) {
