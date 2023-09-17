@@ -31,8 +31,18 @@ The inspiration behind Soropad stemmed from the desire to empower artists, conte
 - soroban-client
 - @stellar/freighter-api
 
-
-
+## What's next for SoroPad
+- smart contracts:
+  - Audit the current contracts
+  - build marketplaces
+- Front-end:
+  - build a better UI
+  - complete the smart contract integration
+  - add more features
+## Challenges we ran into
+1. The updates to the Soroban Stellar network and the Soroban SDK were released during the hackathon. I couldn't sship my contract to testnet on the planned time due to techncial issues I had after the network updates . many hours were spent to figure out what's going wrong and many other hours to fix it. 
+Unfortunately this lead to a significant delay in the development of the front-end. I couldn't apply all the planned functionalities/features to the front-end.
+2. String conversion and concatenation limitation in soroban sdk. I spent many hours to figure out how to convert a string to a i128 and vice versa. I also spent many hours to figure out how to concatenate two strings.
 
 ## How to build:
 Navigate to the contract directory and run the following command :
