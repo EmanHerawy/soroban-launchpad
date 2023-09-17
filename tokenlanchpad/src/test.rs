@@ -56,18 +56,13 @@ fn test_deploy_from_contract() {
  
     // Deploy contract using deployer, and include an init function to call.
     let salt = BytesN::from_array(&env, &[0; 32]);
-     let init_fn :Symbol= ("initialize").into_val(&env);
-     let symbol_ :String= ("symbol").into_val(&env);
-     let name :Symbol= ("name").into_val(&env);
-     let decimal = 7;
+ 
     // admin, &7, &"name".into_val(e), &"symbol".into_val(e)
-    let init_fn_args: Vec<Val> = (admin_account.clone(), decimal,name,symbol_).into_val(&env);
-   
+    
      deployer_client.deploy(
         &deployer_client.address,
         &salt,
-        &init_fn,
-         &init_fn_args,
+       &admin_account, &7, &"name".into_val(&env), &"symbol".into_val(&env)
     );
 
      // No authorizations needed - the contract acts as a factory.
@@ -94,14 +89,11 @@ fn test_contract_config_change() {
  
     // Deploy contract using deployer, and include an init function to call.
     let salt = BytesN::from_array(&env, &[0; 32]);
-    let init_fn = ("initialize").into_val(&env);
-    let init_fn_args: Vec<Val> = (5u32,).into_val(&env);
-    env.mock_all_auths();
+     env.mock_all_auths();
     let contract_id = deployer_client.deploy(
         &deployer_client.address,
         &salt,
-        &init_fn,
-        &init_fn_args,
+        &admin_account, &7, &"name".into_val(&env), &"symbol".into_val(&env)
     );
 
     // No authorizations needed - the contract acts as a factory.

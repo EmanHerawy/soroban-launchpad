@@ -1,6 +1,6 @@
 #![no_std]
  
- use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, Env, Val, Vec,BytesN,Symbol,IntoVal};
+ use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, Env, String, Vec,BytesN};
 mod soroban_token_contract {
     soroban_sdk::contractimport!(
         file = "../token/target/wasm32-unknown-unknown/release/soroban_token_contract.wasm"
@@ -34,8 +34,7 @@ impl Tokenlanchpad {
         env: Env,
         deployer: Address,
         salt: BytesN<32>,
-        init_fn: Symbol,
-        init_args: Vec<Val>,
+        admin: Address, decimal: u32, name: String, symbol: String
     ) -> Result<Address, Error>  {
         if  Self::is_paused(env.clone())==true {Err(Error::Paused) }
         else{
@@ -56,10 +55,10 @@ impl Tokenlanchpad {
         // Invoke the init function with the given arguments.
         // let _res: Val = env.invoke_contract(&deployed_contract, &init_fn, init_args);
         soroban_token_contract::Client::new(&env, &deployed_contract).initialize(
-            &env.current_contract_address(),
-            &7u32,
-            &"Pool Share Token".into_val(&env),
-            &"POOL".into_val(&env),
+            &admin,
+            &decimal,
+            &name,
+            &symbol,
         );
         // Return the contract ID of the deployed contract 
         // get the array from storage Vec::<Address> 
