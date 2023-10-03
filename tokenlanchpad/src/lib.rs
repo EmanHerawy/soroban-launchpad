@@ -62,7 +62,7 @@ impl Tokenlanchpad {
         );
         // Return the contract ID of the deployed contract 
         // get the array from storage Vec::<Address> 
-        let mut contracts  = & mut env.storage().instance().get::<_,Vec::<Address> >(&DataKey::DeployedContracts).unwrap_or(Vec::new(&env));      // save address to adress mappings
+        let  contracts  = & mut env.storage().instance().get::<_,Vec::<Address> >(&DataKey::DeployedContracts).unwrap_or(Vec::new(&env));      // save address to adress mappings
          contracts.push_back(deployed_contract.clone());
         //  // save to ledger
         env.storage()
