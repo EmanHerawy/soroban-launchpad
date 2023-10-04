@@ -10,11 +10,11 @@ edition = "2021"
 [lib]
 crate-type = ["cdylib"]
 [dependencies]
-soroban-sdk = { version = "0.9.2" }
-soroban-token-sdk = { version = "0.9.2" }
+soroban-sdk = { version = "20.0.0-rc2" }
+soroban-token-sdk = { version = "20.0.0-rc2" }
 
 [dev_dependencies]
-soroban-sdk = { version = "0.9.2", features = ["testutils"] }
+soroban-sdk = { version = "20.0.0-rc2", features = ["testutils"] }
 
 [profile.release]
 opt-level = "z"
@@ -29,4 +29,3 @@ lto = true
 [profile.release-with-logs]
 inherits = "release"
 debug-assertions = true
-

@@ -1,4 +1,4 @@
-use crate::storage_types::{DataKey, BALANCE_BUMP_AMOUNT,TokenDataKey};
+use crate::storage_types::{DataKey, BALANCE_BUMP_AMOUNT,BALANCE_LIFETIME_THRESHOLD,TokenDataKey};
 use soroban_sdk::{Address,Vec, Env};
 
 pub fn read_balance(e: &Env, addr: Address) ->Vec<i128> {
@@ -6,24 +6,24 @@ pub fn read_balance(e: &Env, addr: Address) ->Vec<i128> {
      e.storage().persistent().get::<DataKey, Vec<i128>>(&key) .unwrap_or(Vec::new(&e))
 }
 pub fn owner_of(e: &Env, token_id: i128) -> Address {
-     let toke_key = DataKey::Owners(TokenDataKey{token_id});
-   if let Some(owner) = e.storage().persistent().get::<DataKey, Address>(&toke_key) {
-        e.storage().persistent().bump(&toke_key, BALANCE_BUMP_AMOUNT);
+     let token_key = DataKey::Owners(TokenDataKey{token_id});
+   if let Some(owner) = e.storage().persistent().get::<DataKey, Address>(&token_key) {
+        e.storage().persistent().bump(&token_key, BALANCE_LIFETIME_THRESHOLD, BALANCE_BUMP_AMOUNT);
         owner
     } else {
         panic!("token not found");
     }}
 fn write_owner(e: &Env, addr: Address, token_id: i128) {
     // save tokeid => address
-      let toke_key = DataKey::Owners(TokenDataKey{token_id});
-    e.storage().persistent().set(&toke_key, &addr);
-     e.storage().persistent().bump(&toke_key, BALANCE_BUMP_AMOUNT);
+      let token_key = DataKey::Owners(TokenDataKey{token_id});
+    e.storage().persistent().set(&token_key, &addr);
+     e.storage().persistent().bump(&token_key, BALANCE_LIFETIME_THRESHOLD, BALANCE_BUMP_AMOUNT);
 }
 fn write_balance(e: &Env, addr: Address, token_id: Vec<i128>) {
      // save user => tokenids []
     let key = DataKey::Balance(addr);
      e.storage().persistent().set(&key, &token_id);
-     e.storage().persistent().bump(&key, BALANCE_BUMP_AMOUNT);
+     e.storage().persistent().bump(&key,BALANCE_LIFETIME_THRESHOLD, BALANCE_BUMP_AMOUNT);
 }
 fn update_counter(e: &Env) ->i128 {
      // save user => tokenids []
@@ -31,7 +31,7 @@ fn update_counter(e: &Env) ->i128 {
     let mut counter = e.storage().persistent().get::<DataKey, i128>(&key).unwrap_or(0);
     counter = counter + 1;
      e.storage().persistent().set(&key, &counter);
-     e.storage().persistent().bump(&key, BALANCE_BUMP_AMOUNT);
+     e.storage().persistent().bump(&key, BALANCE_LIFETIME_THRESHOLD, BALANCE_BUMP_AMOUNT);
      counter
 }
 
