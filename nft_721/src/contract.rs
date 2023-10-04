@@ -6,7 +6,7 @@ use crate::balance::{is_authorized, write_authorization};
 use crate::balance::{read_balance, receive_balance, spend_balance, owner_of};
 use crate::event;
 use crate::metadata::{ read_name,read_base_uri, read_symbol, write_metadata};
-use crate::storage_types::{INSTANCE_BUMP_AMOUNT, TokenURIValue};
+use crate::storage_types::{INSTANCE_BUMP_AMOUNT,INSTANCE_LIFETIME_THRESHOLD, TokenURIValue};
 use soroban_sdk::{contract, contractimpl, Address, Env,Vec, String, FromVal};
 use crate::token_utils::TokenMetadata;
 use crate::traits::TokenTrait;
@@ -41,11 +41,11 @@ impl TokenTrait for Token {
     }
 
         fn get_approved(e: Env, token_id: i128) -> Address{
-              e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+              e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
         read_allowance(&e, token_id)
         }
     fn owner_of(e: Env, token_id: i128) -> Address{
-          e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+          e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
         owner_of(&e, token_id)
     }
     fn token_uri(e: Env, token_id: i128) -> TokenURIValue{
@@ -54,7 +54,7 @@ impl TokenTrait for Token {
         }
 
     fn is_approved_for_all(e: Env, from: Address, spender: Address) -> bool {
-        e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+        e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
         read_allowance_all(&e, from, spender)
     }
 
@@ -63,7 +63,7 @@ impl TokenTrait for Token {
 
         check_nonnegative_token_id(token_id);
 
-        e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+        e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
           if  owner_of(&e, token_id) != from{
             panic!("not owner")
         }
@@ -74,20 +74,20 @@ impl TokenTrait for Token {
         from.require_auth();
 
  
-        e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+        e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
 
         write_allowance_for_all(&e, from.clone(), spender.clone(), status);
         event::approve_all(&e, from, spender,status);
     }
 
     fn balance_of(e: Env, id: Address) -> Vec<i128> {
-        e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+        e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
         read_balance(&e, id)
     }
 
  
     fn authorized(e: Env, id: Address) -> bool {
-        e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+        e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
         is_authorized(&e, id)
     }
 
@@ -98,7 +98,7 @@ impl TokenTrait for Token {
   if  owner_of(&e, token_id) != from{
             panic!("not owner")
         }
-        e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+        e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
 
         spend_balance(&e, from.clone(), token_id);
         receive_balance(&e, to.clone(), token_id);
@@ -110,7 +110,7 @@ impl TokenTrait for Token {
 
         check_nonnegative_token_id(token_id);
 
-        e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+        e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
 
         spend_allowance(&e,  spender, token_id);
         spend_balance(&e, from.clone(), token_id);
@@ -124,7 +124,7 @@ impl TokenTrait for Token {
         let admin = read_administrator(&e);
         admin.require_auth();
 
-        e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+        e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
 
         write_authorization(&e, id.clone(), authorize);
         event::set_authorized(&e, admin, id, authorize);
@@ -135,7 +135,7 @@ impl TokenTrait for Token {
         let admin = read_administrator(&e);
         admin.require_auth();
 
-        e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+        e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
 
         receive_balance(&e, to.clone(), token_id);
         event::mint(&e, admin, to, token_id);
@@ -145,7 +145,7 @@ impl TokenTrait for Token {
         let admin = read_administrator(&e);
         admin.require_auth();
 
-        e.storage().instance().bump(INSTANCE_BUMP_AMOUNT);
+        e.storage().instance().bump(INSTANCE_LIFETIME_THRESHOLD, INSTANCE_BUMP_AMOUNT);
 
         write_administrator(&e, &new_admin);
         event::set_admin(&e, admin, new_admin);
