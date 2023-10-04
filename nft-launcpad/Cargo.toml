@@ -13,10 +13,10 @@ crate-type = ["cdylib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-soroban-sdk = "0.9.2"
+soroban-sdk = "20.0.0-rc2"
 
 [dev_dependencies]
-soroban-sdk = { version = "0.9.2", features = ["testutils"] }
+soroban-sdk = { version = "20.0.0-rc2", features = ["testutils"] }
 # The testutils test utilities are automatically enabled inside Rust unit tests inside the same crate as your contract. If you write tests from another crate, you'll need to require the testutils feature for those tests and enable the testutils feature when running your tests with cargo test --features testutils to be able to use those test utilities.
 
 
@@ -42,5 +42,3 @@ lto = true
 [profile.release-with-logs]
 inherits = "release"
 debug-assertions = true
-
-
