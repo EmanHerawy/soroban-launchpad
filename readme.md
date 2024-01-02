@@ -1,4 +1,4 @@
-# Soropad 
+# Soropad [![Ceasefire Now](https://badge.techforpalestine.org/ceasefire-now)](https://techforpalestine.org/learn-more)
 ### **"Sorapad: Your easy way to a world of tokenization on Stellar network."**
 
 ![Alt text](image.png)
